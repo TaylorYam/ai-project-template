@@ -1,25 +1,32 @@
 ---
-name: Architecture decision proposal
-about: Discuss a significant or long-lived architecture choice
-title: "ADR proposal: "
+name: 架構決策提案
+about: 討論影響重大或長期有效的架構選擇
+title: 'ADR 提案：'
 labels: architecture
-assignees: ""
+assignees: ''
 ---
 
-## Decision to make
-State the question that needs a durable decision.
+## 待決定的問題
 
-## Context
-Describe the forces, constraints, and requirements that shape the choice.
+說明需要留下長期決策紀錄的問題。
 
-## Options considered
-For each option, summarize the benefits, costs, and risks.
+## 背景
 
-## Preferred direction
-Describe the current recommendation and why it fits the project.
+說明影響選擇的需求、限制與考量。
 
-## Consequences
-What becomes easier or harder? What migration, operational, or compatibility work follows?
+## 考慮過的選項
 
-## Decision owners and timing
-Who should weigh in, and by when does the decision need to be made?
+簡述各選項的好處、成本與風險。
+
+## 建議方向
+
+目前建議哪個選項？為什麼適合這個專案？
+
+## 後續影響
+
+哪些事會變容易或變困難？是否需要搬遷、維運或相容性處理？
+
+## 決策參與者與時間
+
+誰需要參與？最晚何時需要決定？
+

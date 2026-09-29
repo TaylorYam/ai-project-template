@@ -1,22 +1,28 @@
 ---
-name: Task
-about: Plan a feature, improvement, or maintenance change
-title: ""
+name: 工作項目
+about: 規劃新功能、改善或維護工作
+title: ''
 labels: task
-assignees: ""
+assignees: ''
 ---
 
-## Goal
-Describe the outcome this task should achieve.
+## 目標
 
-## Context
-Why is this needed? Include relevant links, user needs, and existing behavior.
+這項工作完成後，要達成什麼結果？
 
-## Acceptance criteria
-- [ ] State an observable result that must be true when the task is complete.
+## 背景
 
-## Scope and constraints
-List important boundaries, compatibility needs, or dependencies.
+為什麼需要這項工作？請附上相關連結、使用者需求與目前行為。
 
-## Validation
-Describe how the change should be tested or reviewed.
+## 驗收條件
+
+- [ ] 寫出完成時可觀察、可確認的結果。
+
+## 範圍與限制
+
+列出重要邊界、相容性需求或相依項目。
+
+## 驗證方式
+
+這項變更應如何測試或 Review？
+

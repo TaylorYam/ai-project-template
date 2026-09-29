@@ -23,9 +23,12 @@ Keep `main` as the stable integration branch. Make routine changes on a task bra
 
 Use the issue templates for tasks, bugs, and architecture decision proposals. Link the issue from the pull request so the intent and implementation stay connected.
 
+Agents should follow the Work Routing in `AGENTS.md` before creating an Issue. Agent conversations default to plain Traditional Chinese (Taiwan usage); agent-created GitHub Issues default to Traditional Chinese.
+
 ## Repository guide
 
-- `AGENTS.md` — instructions for AI agents and human contributors.
+- `AGENTS.md` — shared AI development policy for Claude Code, Codex, and human contributors.
+- `CLAUDE.md` — Claude Code entry point that imports `AGENTS.md`.
 - `.github/ISSUE_TEMPLATE/` — task, bug, and architecture decision forms.
 - `.github/pull_request_template.md` — review checklist and validation record.
 - `.github/workflows/ci.yml` — starter whitespace check; add the project's formatter, tests, type checks, and build here.
@@ -37,3 +40,4 @@ Use the issue templates for tasks, bugs, and architecture decision proposals. Li
 ## Template maintenance
 
 Keep this repository stack-neutral. When changing the workflow, update the relevant source file and this guide if the change affects how a new project is bootstrapped. Use Git tags such as `v1.0.0` to identify template versions used by new repositories.
+

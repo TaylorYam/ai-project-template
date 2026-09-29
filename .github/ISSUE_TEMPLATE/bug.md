@@ -1,29 +1,36 @@
 ---
-name: Bug report
-about: Report behavior that differs from what the project intends
-title: ""
+name: 回報錯誤
+about: 回報與預期不同的行為
+title: ''
 labels: bug
-assignees: ""
+assignees: ''
 ---
 
-## Summary
-Describe the problem in a few sentences.
+## 問題摘要
 
-## Expected behavior
-What should happen?
+請用幾句話說明問題。
 
-## Actual behavior
-What happened instead? Include the exact error text when useful, after removing secrets and personal data.
+## 預期行為
 
-## Steps to reproduce
-1. First step
-2. Next step
-3. Final step
+原本應該發生什麼事？
 
-## Environment
-- Version or commit:
-- Operating system / runtime:
-- Relevant configuration (redact secrets):
+## 實際行為
 
-## Impact and workaround
-Who or what is affected? Is there a temporary workaround?
+實際發生了什麼事？如有幫助，請附上確切錯誤訊息，並先移除機密及個人資料。
+
+## 重現步驟
+
+1. 第一步
+2. 下一步
+3. 最後一步
+
+## 環境
+
+- 版本或 commit：
+- 作業系統／執行環境：
+- 相關設定（請遮蔽機密）：
+
+## 影響與暫時解法
+
+哪些人或功能受到影響？目前有暫時解法嗎？
+
