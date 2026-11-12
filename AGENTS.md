@@ -48,6 +48,7 @@
 
 - 與使用者的一般對話（包含 `/grill-with-docs`）使用簡潔、具體、淺白的繁體中文（台灣用語）。用日常語言提出深入的問題。
 - 有幫助時使用技術術語；不常見的術語第一次出現時簡短解釋。Git、Branch、PR、API、Database、SQL、CI 等常見術語不需強行翻譯。函式名稱、類別、API、函式庫、路徑與指令保留原文。
+- 對話、Issue、PR、commit message、程式註解與文件，都依 [`docs/communication-style.md`](docs/communication-style.md) 撰寫。這份規範改寫自 ASD-STE100 的結構規則：一句一個重點、限制句長、用主動語態、步驟用編號清單、同一個概念固定用同一個詞。
 
 ### 設計與實作
 
@@ -109,6 +110,7 @@ Keep `main` as the stable integration branch. For planned work, follow:
 
 - Use concise, concrete, plain Traditional Chinese (Taiwan usage) in ordinary conversations with the user, including `/grill-with-docs`. Ask deep questions in everyday language.
 - Use technical terms when helpful; explain unfamiliar ones briefly on first use. Common terms such as Git, Branch, PR, API, Database, SQL, and CI need no forced translation. Preserve function names, classes, APIs, libraries, paths, and commands.
+- Write conversations, Issues, PRs, commit messages, code comments, and documentation as [`docs/communication-style.md`](docs/communication-style.md) specifies. This guide adapts the structural rules of ASD-STE100: one topic in each sentence, limited sentence length, active voice, numbered steps, and the same term for the same concept.
 
 ### Design and implementation
 

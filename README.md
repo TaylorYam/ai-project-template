@@ -44,6 +44,7 @@ Agent 建立 Issue 之前應先依 `AGENTS.md` 的工作分流判斷路線。Age
 - `.env.example` — 環境變數的名稱與安全佔位值；切勿放入真實機密。
 - `docs/architecture.md` — 目前系統的概觀，以及重要設計選擇的索引。
 - `docs/adr/` — 重大架構決策的長期紀錄。
+- `docs/communication-style.md` — AI 產出文字的寫作規範，改寫自 ASD-STE100 的結構規則。
 
 ### 範本維護
 
@@ -89,6 +90,7 @@ Agents should follow the Work Routing in `AGENTS.md` before creating an Issue. A
 - `.env.example` — names and safe placeholders for environment variables; never put real secrets here.
 - `docs/architecture.md` — current system overview and pointers to important design choices.
 - `docs/adr/` — durable records of significant architecture decisions.
+- `docs/communication-style.md` — writing rules for AI-written text, adapted from the structural rules of ASD-STE100.
 
 ### Template maintenance
 
