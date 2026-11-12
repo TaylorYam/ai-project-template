@@ -12,17 +12,41 @@
 
 ### 工作分流
 
-建立 Issue 之前先選定路線：
+建立 Issue 之前，先選定路線。每條路線由下方「步驟」組成。
 
-- 新功能、重要需求不明確：`/grill-with-docs` → `/to-spec` → 只有單一 Issue／PR 太大時才用 `/to-tickets` → `/implement` → `/code-review`。只針對真正不確定的地方追問。
-- 新功能、需求明確：檢查相關程式碼 → 建立 GitHub Issue → `/implement <issue>` → `/code-review`。
-- Bug、原因與正確行為都明確：檢查相關程式碼 → 建立 GitHub Issue → `/implement <issue>` → `/code-review`。合理時加入回歸測試（regression test）。
-- Bug、原因不明：`/diagnosing-bugs` → 建立重現方式 → 找出根本原因 → 確認正確行為 → 建立 GitHub Issue → `/implement <issue>` → `/code-review`。假設與已確認的原因要分開記錄。
-- 外部或他人提出的 Issue：既有 Issue → `/triage <issue>` → `ready-for-agent` → `/implement <issue>` → `/code-review`。
+#### 步驟
 
-`/triage` 主要用於他人建立的 Issue。由本 agent、`/to-spec` 或 `/to-tickets` 建立且已可直接實作的 Issue，不需要再 triage。只有工作量超過單一 Issue／PR 時才使用 `/to-tickets`。
+每個步驟都能手動執行。有安裝 [mattpocock/skills](https://github.com/mattpocock/skills) 時，使用「skill」欄的 skill。沒有安裝時，照「做法」欄執行。不要因為缺少 skill 就跳過步驟。使用者沒有要求時，不要自行安裝 skill。
 
-判斷方式：不知道**要做什麼** → Grill；知道**要做什麼** → Issue → Implement；不知道 **bug 為什麼發生** → Diagnose；明確的 bug → Issue → Implement；外部 Issue → Triage；工作量過大 → Tickets。
+| 步驟 | 做法 | 產出 | skill |
+|---|---|---|---|
+| 釐清需求 | 一次問一個問題，只問真正不確定的地方。每個問題附上建議答案。能從程式碼查到的事，不要問使用者。 | 已確認的目標、範圍、驗收條件與決策 | `grill-with-docs` |
+| 寫成規格 | 把已確認的結論寫成一個可直接實作的 GitHub Issue。寫明目標、範圍、驗收條件與不在範圍內的事。 | 一個 GitHub Issue | `to-spec` |
+| 拆分工作 | 只在一個 Issue／PR 裝不下時使用。把工作拆成可以各自 merge 的子 Issue，並寫明相依關係。 | 多個子 Issue | `to-tickets` |
+| 診斷 bug | 1. 建立重現方式。2. 縮小範圍。3. 列出假設。4. 加入觀測。5. 找出根本原因。6. 確認正確行為。假設與已確認的原因分開記錄。 | 重現方式、根本原因、正確行為 | `diagnosing-bugs` |
+| Triage | 確認 Issue 的內容成立；bug 要先重現。替 Issue 分類。資訊不足時，提出具體的問題。依 [`docs/agents/triage-labels.md`](docs/agents/triage-labels.md) 套用 label。 | 已分類的 Issue | `triage` |
+| 實作 | 依 Issue 實作。行為改變時，先新增或更新測試。執行相關檢查。 | 通過檢查的變更 | `implement` |
+| 審查 | 開 PR 之前，檢查 diff 的正確性與範圍。修正發現的問題。 | 審查過的 diff | `code-review` |
+
+#### 路線
+
+- 新功能、重要需求不明確：釐清需求 → 寫成規格 → 拆分工作（只在需要時）→ 實作 → 審查。
+- 新功能、需求明確：檢查相關程式碼 → 寫成規格 → 實作 → 審查。
+- Bug、原因與正確行為都明確：檢查相關程式碼 → 寫成規格 → 實作 → 審查。合理時加入回歸測試（regression test）。
+- Bug、原因不明：診斷 bug → 寫成規格 → 實作 → 審查。
+- 外部或他人提出的 Issue：Triage → 套用 `ready-for-agent` → 實作 → 審查。
+
+Triage 主要用於他人建立的 Issue。本 agent 在「寫成規格」或「拆分工作」步驟建立的 Issue，已經可以直接實作，不需要再 triage。
+
+判斷方式：不知道**要做什麼** → 釐清需求；知道**要做什麼** → 寫成規格 → 實作；不知道 **bug 為什麼發生** → 診斷 bug；明確的 bug → 寫成規格 → 實作；外部 Issue → Triage；工作量過大 → 拆分工作。
+
+#### Agent skills 設定
+
+本樣板已經預先完成 `/setup-matt-pocock-skills` 的設定。不需要再執行這個 skill。
+
+- Issue tracker：GitHub Issues。見 [`docs/agents/issue-tracker.md`](docs/agents/issue-tracker.md)。
+- Triage label：使用預設的 5 個 label。見 [`docs/agents/triage-labels.md`](docs/agents/triage-labels.md)。
+- Domain docs：single-context。見 [`docs/agents/domain.md`](docs/agents/domain.md)。
 
 ### 修改檔案之前
 
@@ -37,7 +61,7 @@
 
 `Issue → branch 或 worktree → 規劃 → 實作 → 驗證 → commit 與 push → pull request → review 與 CI → merge`
 
-- 實作前先建立可直接實作的 Issue，寫清楚目標、範圍與可觀察的驗收條件。Agent 建立的 Issue 標題與內文所有段落預設使用繁體中文（台灣用語），包含 `/to-spec` 建立的 Issue 與 `/to-tickets` 的子 Issue。正式技術識別名稱保留英文。既有的英文 Issue 不需改寫；直接與說英文的外部貢獻者溝通時使用英文。
+- 實作前先建立可直接實作的 Issue，寫清楚目標、範圍與可觀察的驗收條件。Agent 建立的 Issue 標題與內文所有段落預設使用繁體中文（台灣用語），包含「寫成規格」建立的 Issue 與「拆分工作」建立的子 Issue。正式技術識別名稱保留英文。既有的英文 Issue 不需改寫；直接與說英文的外部貢獻者溝通時使用英文。
 - Branch 名稱要能看出用途，例如 `feat/export-report` 或 `fix/timezone-boundary`。
 - 變更聚焦在對應的 Issue，並在 PR 中記錄重要的使用者可見或架構上的取捨。
 - 執行相關檢查；行為改變時新增或更新測試，並回報無法執行的檢查。
@@ -46,7 +70,7 @@
 
 ### 溝通
 
-- 與使用者的一般對話（包含 `/grill-with-docs`）使用簡潔、具體、淺白的繁體中文（台灣用語）。用淺白的語言提出深入的問題。
+- 與使用者的一般對話（包含「釐清需求」步驟）使用簡潔、具體、淺白的繁體中文（台灣用語）。用淺白的語言提出深入的問題。
 - 有幫助時使用技術術語。Git、Branch、PR、API、Database、SQL、CI 等常見術語不需強行翻譯。
 - 對話、Issue、PR、commit message、程式註解與文件，都依 [`docs/communication-style.md`](docs/communication-style.md) 撰寫。這份規範改寫自 ASD-STE100 的結構規則：一句一個重點、限制句長、用主動語態、步驟用編號清單、同一個概念固定用同一個詞。
 
@@ -74,17 +98,41 @@ This root-level file is the repository's shared AI development policy. It define
 
 ### Work routing
 
-Choose the route before creating an Issue:
+Choose the route before you create an Issue. Each route is a sequence of the steps below.
 
-- New feature, important requirements unclear: `/grill-with-docs` → `/to-spec` → `/to-tickets` only if one Issue / PR is too large → `/implement` → `/code-review`. Grill only genuine uncertainties.
-- New feature, requirements clear: inspect relevant code → create a GitHub Issue → `/implement <issue>` → `/code-review`.
-- Bug, cause and correct behavior clear: inspect relevant code → create a GitHub Issue → `/implement <issue>` → `/code-review`. Add a regression test when reasonable.
-- Bug, cause unclear: `/diagnosing-bugs` → establish reproduction → identify root cause → confirm correct behavior → create a GitHub Issue → `/implement <issue>` → `/code-review`. Keep hypotheses separate from confirmed causes.
-- External or incoming Issue: existing Issue → `/triage <issue>` → `ready-for-agent` → `/implement <issue>` → `/code-review`.
+#### Steps
 
-Use `/triage` mainly for Issues created by others. An implementation-ready Issue created by this agent, `/to-spec`, or `/to-tickets` does not need another triage. Use `/to-tickets` only when the work is too large for one Issue / PR.
+You can do each step manually. If [mattpocock/skills](https://github.com/mattpocock/skills) is installed, use the skill in the "Skill" column. If it is not installed, do the step as the "Method" column describes. Do not skip a step because a skill is missing. Do not install skills unless the user asks.
 
-Decision guide: unknown **what to build** → Grill; known **what to build** → Issue → Implement; unknown **why a bug occurs** → Diagnose; clear bug → Issue → Implement; external Issue → Triage; oversized work → Tickets.
+| Step | Method | Output | Skill |
+|---|---|---|---|
+| Clarify | Ask one question at a time. Ask only about genuine uncertainties. Give a recommended answer with each question. Do not ask the user about facts that the code shows. | Confirmed goal, scope, acceptance criteria, and decisions | `grill-with-docs` |
+| Spec | Write the confirmed result as one implementation-ready GitHub Issue. Include the goal, scope, acceptance criteria, and out-of-scope items. | One GitHub Issue | `to-spec` |
+| Tickets | Use only when one Issue / PR cannot hold the work. Split the work into child Issues that can merge separately. Record the dependencies. | Child Issues | `to-tickets` |
+| Diagnose | 1. Make a reproduction. 2. Make the scope smaller. 3. List hypotheses. 4. Add instrumentation. 5. Find the root cause. 6. Confirm the correct behavior. Keep hypotheses separate from confirmed causes. | Reproduction, root cause, correct behavior | `diagnosing-bugs` |
+| Triage | Make sure that the Issue is valid; reproduce a bug first. Categorize the Issue. If information is missing, ask specific questions. Apply labels as [`docs/agents/triage-labels.md`](docs/agents/triage-labels.md) specifies. | Categorized Issue | `triage` |
+| Implement | Implement the Issue. If behavior changes, add or update tests first. Run the relevant checks. | A change that passes the checks | `implement` |
+| Review | Before you open a PR, examine the diff for correctness and scope. Fix the problems that you find. | A reviewed diff | `code-review` |
+
+#### Routes
+
+- New feature, important requirements unclear: Clarify → Spec → Tickets (only when necessary) → Implement → Review.
+- New feature, requirements clear: inspect relevant code → Spec → Implement → Review.
+- Bug, cause and correct behavior clear: inspect relevant code → Spec → Implement → Review. Add a regression test when reasonable.
+- Bug, cause unclear: Diagnose → Spec → Implement → Review.
+- External or incoming Issue: Triage → apply `ready-for-agent` → Implement → Review.
+
+Use Triage mainly for Issues that other people create. An Issue that this agent creates in the Spec or Tickets step is ready for implementation. It does not need triage.
+
+Decision guide: unknown **what to build** → Clarify; known **what to build** → Spec → Implement; unknown **why a bug occurs** → Diagnose; clear bug → Spec → Implement; external Issue → Triage; oversized work → Tickets.
+
+#### Agent skills configuration
+
+This template already contains the `/setup-matt-pocock-skills` configuration. Do not run that skill again.
+
+- Issue tracker: GitHub Issues. See [`docs/agents/issue-tracker.md`](docs/agents/issue-tracker.md).
+- Triage labels: the 5 default labels. See [`docs/agents/triage-labels.md`](docs/agents/triage-labels.md).
+- Domain docs: single-context. See [`docs/agents/domain.md`](docs/agents/domain.md).
 
 ### Before changing files
 
@@ -99,7 +147,7 @@ Keep `main` as the stable integration branch. For planned work, follow:
 
 `Issue → branch or worktree → plan → implementation → validation → commit and push → pull request → review and CI → merge`
 
-- Create an implementation-ready Issue before implementation, with a clear goal, scope, and observable acceptance criteria. Agent-created Issue titles and all body sections default to Traditional Chinese (Taiwan usage), including `/to-spec` Issues and `/to-tickets` children. Keep formal technical identifiers in English. Existing English Issues need no rewrite; use English when communicating directly with an English-speaking external contributor.
+- Create an implementation-ready Issue before implementation, with a clear goal, scope, and observable acceptance criteria. Agent-created Issue titles and all body sections default to Traditional Chinese (Taiwan usage), including Issues from the Spec step and child Issues from the Tickets step. Keep formal technical identifiers in English. Existing English Issues need no rewrite; use English when communicating directly with an English-speaking external contributor.
 - Give branches descriptive names, such as `feat/export-report` or `fix/timezone-boundary`.
 - Keep changes focused on their Issue and record significant user-visible or architectural tradeoffs in the PR.
 - Run relevant checks; add or update tests when behavior changes and report checks that could not run.
@@ -108,7 +156,7 @@ Keep `main` as the stable integration branch. For planned work, follow:
 
 ### Communication
 
-- Use concise, concrete, plain Traditional Chinese (Taiwan usage) in ordinary conversations with the user, including `/grill-with-docs`. Ask deep questions in plain language.
+- Use concise, concrete, plain Traditional Chinese (Taiwan usage) in ordinary conversations with the user, including the Clarify step. Ask deep questions in plain language.
 - Use technical terms when helpful. Common terms such as Git, Branch, PR, API, Database, SQL, and CI need no forced translation.
 - Write conversations, Issues, PRs, commit messages, code comments, and documentation as [`docs/communication-style.md`](docs/communication-style.md) specifies. This guide adapts the structural rules of ASD-STE100: one topic in each sentence, limited sentence length, active voice, numbered steps, and the same term for the same concept.
 

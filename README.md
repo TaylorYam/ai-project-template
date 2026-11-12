@@ -14,12 +14,64 @@
 
 1. 在 GitHub 開啟此 repository，選擇 **Use this template → Create a new repository**，設定新 repository 的擁有者、名稱、可見性與其他選項。
 2. Clone 新的 repository，並用編輯器或 coding agent 開啟。
-3. 建立一個 **Project bootstrap** Issue，說明專案目的、使用者、選定的技術堆疊與第一個交付成果。
-4. 請 coding agent 閱讀 `AGENTS.md`、本 README、`.github/` 與 `docs/`，檢查 repository 後，先提出針對此專案的修改建議再動手編輯。
-5. 依專案需求調整 `.gitignore`、`.env.example`、`docs/architecture.md` 與 `.github/workflows/ci.yml`。開始開發功能前，先加入測試與該技術堆疊的品質檢查。
-6. Review 並 merge bootstrap pull request，之後透過 Issue 與 pull request 進行功能開發。
+3. （選用）安裝 AI skills，並建立 triage label。見下方「AI skills（選用）」。
+4. 建立一個 **Project bootstrap** Issue，說明專案目的、使用者、選定的技術堆疊與第一個交付成果。
+5. 請 coding agent 閱讀 `AGENTS.md`、本 README、`.github/` 與 `docs/`，檢查 repository 後，先提出針對此專案的修改建議再動手編輯。
+6. 依專案需求調整 `.gitignore`、`.env.example`、`docs/architecture.md` 與 `.github/workflows/ci.yml`。開始開發功能前，先加入測試與該技術堆疊的品質檢查。
+7. Review 並 merge bootstrap pull request，之後透過 Issue 與 pull request 進行功能開發。
 
 如果 GitHub 沒有顯示 **Use this template**，擁有者可以在 **Settings → General → Template repository** 啟用。
+
+### AI skills（選用）
+
+`AGENTS.md` 的工作流程可以搭配 [mattpocock/skills](https://github.com/mattpocock/skills) 使用。這些 skill 是選用的：沒有安裝時，agent 照 `AGENTS.md` 的文字步驟手動執行。
+
+**安裝**
+
+所有 agent 都使用同一個指令安裝。不使用 plugin。
+
+1. 確認電腦已安裝 Node.js。
+2. 執行下面的指令。把 `<agent>` 換成你的 agent，例如 `claude-code` 或 `codex`。省略 `-a <agent>` 時，CLI 會詢問。
+
+   ```bash
+   npx skills@latest add mattpocock/skills -g -a <agent>
+   ```
+
+3. CLI 詢問要安裝哪些 skill 時，至少選這些：`grill-with-docs`、`grilling`、`domain-modeling`、`to-spec`、`to-tickets`、`diagnosing-bugs`、`triage`、`implement`、`tdd`、`code-review`。
+
+`-g` 會把 skill 安裝到使用者層級，不會寫進專案 repo。安裝的 skill 不會自動更新。要更新時，執行：
+
+```bash
+npx skills@latest update
+```
+
+**不需要執行 `/setup-matt-pocock-skills`**
+
+本樣板已經在 `docs/agents/` 放好設定。再執行一次，可能會在 `CLAUDE.md` 多出一份重複的設定段落。
+
+**建立 triage label**
+
+用本樣板建立的新 repo，可能沒有 triage 需要的 label。在新 repo 的目錄執行下面的指令。`--force` 會更新已經存在的 label，不會重複建立。
+
+```bash
+gh label create needs-triage --description "Maintainer needs to evaluate this issue" --force
+```
+
+```bash
+gh label create needs-info --description "Waiting on reporter for more information" --force
+```
+
+```bash
+gh label create ready-for-agent --description "Fully specified, ready for an AFK agent" --force
+```
+
+```bash
+gh label create ready-for-human --description "Requires human implementation" --force
+```
+
+```bash
+gh label create wontfix --description "Will not be actioned" --force
+```
 
 ### 貢獻流程
 
@@ -44,6 +96,7 @@ Agent 建立 Issue 之前應先依 `AGENTS.md` 的工作分流判斷路線。Age
 - `.env.example` — 環境變數的名稱與安全佔位值；切勿放入真實機密。
 - `docs/architecture.md` — 目前系統的概觀，以及重要設計選擇的索引。
 - `docs/adr/` — 重大架構決策的長期紀錄。
+- `docs/agents/` — mattpocock/skills 的 issue tracker、triage label 與 domain docs 設定。
 - `docs/communication-style.md` — AI 產出文字的寫作規範，改寫自 ASD-STE100 的結構規則。
 
 ### 範本維護
@@ -60,12 +113,64 @@ A GitHub-first starting point for projects built by people and AI coding agents.
 
 1. On GitHub, open this repository and select **Use this template → Create a new repository**. Choose the new repository's owner, name, visibility, and other settings.
 2. Clone the new repository and open it in your editor or coding agent.
-3. Create a **Project bootstrap** issue describing the purpose, users, chosen stack, and first deliverable.
-4. Ask the coding agent to read `AGENTS.md`, this README, `.github/`, and `docs/`; inspect the repository; then propose project-specific changes before editing.
-5. Tailor `.gitignore`, `.env.example`, `docs/architecture.md`, and `.github/workflows/ci.yml` to the project. Add tests and stack-specific quality checks before feature work.
-6. Review and merge the bootstrap pull request, then begin feature work through issues and pull requests.
+3. (Optional) Install the AI skills and create the triage labels. See "AI skills (optional)" below.
+4. Create a **Project bootstrap** issue describing the purpose, users, chosen stack, and first deliverable.
+5. Ask the coding agent to read `AGENTS.md`, this README, `.github/`, and `docs/`; inspect the repository; then propose project-specific changes before editing.
+6. Tailor `.gitignore`, `.env.example`, `docs/architecture.md`, and `.github/workflows/ci.yml` to the project. Add tests and stack-specific quality checks before feature work.
+7. Review and merge the bootstrap pull request, then begin feature work through issues and pull requests.
 
 If GitHub does not show **Use this template**, an owner can enable it in **Settings → General → Template repository**.
+
+### AI skills (optional)
+
+The workflow in `AGENTS.md` can use [mattpocock/skills](https://github.com/mattpocock/skills). These skills are optional. If they are not installed, the agent follows the written steps in `AGENTS.md`.
+
+**Install**
+
+Use the same command for all agents. Do not use plugins.
+
+1. Make sure that Node.js is installed.
+2. Run the command below. Replace `<agent>` with your agent, for example `claude-code` or `codex`. If you omit `-a <agent>`, the CLI asks you.
+
+   ```bash
+   npx skills@latest add mattpocock/skills -g -a <agent>
+   ```
+
+3. When the CLI asks which skills to install, select at least `grill-with-docs`, `grilling`, `domain-modeling`, `to-spec`, `to-tickets`, `diagnosing-bugs`, `triage`, `implement`, `tdd`, and `code-review`.
+
+The `-g` flag installs the skills at the user level. It does not write them into the project repository. Installed skills do not update automatically. To update them, run:
+
+```bash
+npx skills@latest update
+```
+
+**Do not run `/setup-matt-pocock-skills`**
+
+This template already contains the configuration in `docs/agents/`. If you run the setup again, it can add a duplicate configuration section to `CLAUDE.md`.
+
+**Create the triage labels**
+
+A new repository made from this template may not have the labels that triage uses. Run the commands below in the new repository. The `--force` flag updates a label that already exists. It does not make a duplicate.
+
+```bash
+gh label create needs-triage --description "Maintainer needs to evaluate this issue" --force
+```
+
+```bash
+gh label create needs-info --description "Waiting on reporter for more information" --force
+```
+
+```bash
+gh label create ready-for-agent --description "Fully specified, ready for an AFK agent" --force
+```
+
+```bash
+gh label create ready-for-human --description "Requires human implementation" --force
+```
+
+```bash
+gh label create wontfix --description "Will not be actioned" --force
+```
 
 ### Contribution flow
 
@@ -90,6 +195,7 @@ Agents should follow the Work Routing in `AGENTS.md` before creating an Issue. A
 - `.env.example` — names and safe placeholders for environment variables; never put real secrets here.
 - `docs/architecture.md` — current system overview and pointers to important design choices.
 - `docs/adr/` — durable records of significant architecture decisions.
+- `docs/agents/` — issue tracker, triage label, and domain docs configuration for mattpocock/skills.
 - `docs/communication-style.md` — writing rules for AI-written text, adapted from the structural rules of ASD-STE100.
 
 ### Template maintenance
